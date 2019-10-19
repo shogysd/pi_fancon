@@ -14,10 +14,10 @@ class PowerAdjustment(object):
     """
 
     def __init__(self):
-        self.power = 0
+        self.power = 0.0
 
     def update_power(self):
-        cpu_temp = getoutput("vcgencmd measure_temp").split("=")[1].split("'")[0]
+        cpu_temp = float(getoutput("vcgencmd measure_temp").split("=")[1].split("'")[0])
         if cpu_temp <= 40:
             self.power = 0.0
         elif cpu_temp <= 50:
@@ -29,7 +29,6 @@ class PowerAdjustment(object):
         else:
             self.power = -1.0
 
-    @property
-    def get_power(self):
+    def get_power(self) -> float:
         self.update_power()
         return self.power
